@@ -1,28 +1,12 @@
-
-
 <?php
 
 
 function pluginindexfunctions (){
-    
-  if($_POST["action"]=="update"){
-    if(!isset($_POST["testplugin"]) || ! wp_verify_nonce($_POST["testplugin"], 'testplugin')){
-      echo "Error";
-    }else {
-      global $wpdb;
-      $postnr = sanitize_text_field($_POST["postnr"]);
-      $windows = sanitize_text_field($_POST["windows"]);
-      $hustype = sanitize_text_field($_POST["hustype"]);
-      $type = sanitize_text_field($_POST["type"]);
-      $hustype = sanitize_text_field($_POST["hustype"]);
-      $ofte = sanitize_text_field($_POST["ofte"]);
 
-      $wpdb->insert("{$wpdb->prefix}tableberegn",array("postnr"=>$postnr,"windows"=>$windows,"doors"=>$doors,"antal"=>$antal,"type"=>$type,"hustype"=>$hustype,"ofte"=>$ofte));
-      echo '<div class="updated">Setting updated</div>';
-    }
-
-  }
+  
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="beregn">
     
 <h1>Beregning System </h1>
@@ -56,21 +40,24 @@ function pluginindexfunctions (){
 
 global $wpdb;
 $list = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tableberegn ORDER BY id DESC LIMIT 1");
+
 foreach ($list as $beregnlist){
 
+    $postnummer =  $beregnlist->postnr;
+    
+    $allowed_postal_codes = explode(',', $postnummer);
 
-
-  $adminpost = array(5000,5200,5210,5220,5230,5240,5250,5260,5270,5280,5290,5320,5330,5340);
-
-
+    
 
 if(isset($_POST['postnr'])) { // har vi sendt form
+
   $postnr = $_POST["postnr"];
   $windows = $_POST["windows"];
   $hustype = $_POST["hustype"];
+  $tilbud=' <br> <br> <button id="hide">Få tilbud</button> <button id="hide1">Bestil Rengøring</button>';
+  
 
-
-      if(in_array($postnr, $adminpost)) { // info er korrekt
+      if(in_array($postnr, $allowed_postal_codes)) { // info er korrekt
 
          session_start();
 
@@ -78,64 +65,58 @@ if(isset($_POST['postnr'])) { // har vi sendt form
           if ($windows == 9 && $hustype == 1) {
             $a = $beregnlist->windows9;
             $b= $beregnlist->villa1;
-            echo $a + $b;
-        ?>    <br>  <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+            echo $a + $b.' kr.';
+            echo $tilbud;
+            
+            
         }elseif ($windows == 9 && $hustype == 2 ) {
           $a = $beregnlist->windows9;
           $b= $beregnlist->villa2;
-          echo $a + $b;
-                  ?>    <br>  <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+        echo $tilbud;
 
         }elseif ($windows == 9 && $hustype == 3 ) {
           $a = $beregnlist->windows9;
           $b= $beregnlist->villa3;
-          echo $a + $b;
-                  ?>   <br>   <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+          echo $tilbud;
 
         }elseif ($windows == 19 && $hustype == 1 ) {
           $a = $beregnlist->windows19;
           $b= $beregnlist->villa1;
-          echo $a + $b;
-                  ?>    <br>  <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+          echo $tilbud;
 
         }elseif ($windows == 19 && $hustype == 2 ) {
           $a = $beregnlist->windows19;
           $b= $beregnlist->villa2;
-          echo $a + $b;
-                  ?>   <br>   <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+          echo $tilbud;
 
         }elseif ($windows == 19 && $hustype == 3 ) {
           $a = $beregnlist->windows19;
           $b= $beregnlist->villa3;
-          echo $a + $b;
-                  ?>    <br>  <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+          echo $tilbud;
 
         }elseif ($windows == 29 && $hustype == 1 ) {
           $a = $beregnlist->windows29;
           $b= $beregnlist->villa1;
-          echo $a + $b;
-                  ?>  <br>    <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+         echo $tilbud;
 
         }elseif ($windows == 29 && $hustype == 2 ) {
           $a = $beregnlist->windows29;
           $b= $beregnlist->villa2;
-          echo $a + $b;
-                  ?>     <br> <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+         echo $tilbud;
+         
 
         }elseif ($windows == 29 && $hustype == 3 ) {
           $a = $beregnlist->windows29;
           $b= $beregnlist->villa3;
-          echo $a + $b;
-                  ?>   <br> <button onclick="myFunction()">Få tilbud</button> <button onclick="myFunction1()">Bestil Rengøring</button><?php
-
+          echo $a + $b.' kr.';
+         echo $tilbud;
 
         }
              else{
@@ -152,36 +133,16 @@ if(isset($_POST['postnr'])) { // har vi sendt form
 }
 }
            ?> 
-<style>
-    #tilbudDIV {
-  width: 50%;
-  padding: 50px 0;
-  text-align: center;
-  background-color: lightblue;
-  margin-top: 20px;
-  display: none ;
-}
-    #bestilDIV {
-  width: 50%;
-  padding: 50px 0;
-  text-align: center;
-  background-color: lightblue;
-  margin-top: 20px;
-  display: none ;
-}
+<div class="formul">
 
-</style>
 <div id="tilbudDIV">
   
 
 <form action="" method="post">
   <?php wp_nonce_field('testplugin','testplugin'); ?>
   
-  <label for="wname">Dit Navn</label>
    <input type="text" name="email" value="" placeholder="Dit navn">
 
-
-  <label for="wname">Din email</label>
   <input type="text" name="email" value="" placeholder="Din Email">
 
   
@@ -196,21 +157,15 @@ if(isset($_POST['postnr'])) { // har vi sendt form
 <form action="" method="post">
   <?php wp_nonce_field('testplugin','testplugin'); ?>
   
-  <label for="wname">Dit Navn</label>
    <input type="text" name="navn" value="" placeholder="Dit navn">
 
-
-  <label for="wname">Din email</label>
   <input type="text" name="email" value="" placeholder="Din Email">
 
-  
-  <label for="wname">Din adress</label>
-  <input type="text" name="adress" value="" placeholder="Din Adress">
+    <input type="text" name="adress" value="" placeholder="Din Adress">
  
-  <label for="wname">Din telefon nummer</label>
   <input type="text" name="telefon" value="" placeholder="Din Telefon nummer">
 
-  <input type="checkbox" id="person1" name="person1" value="Persondata"> Ja, jeg accepterer at du kan kontakt med mig
+  <p><input type="checkbox" id="person1" name="person1" value="Persondata"> Ja, jeg accepterer at du kan kontakt med mig</p>
 
   <input type="submit" value="send">
 
@@ -219,25 +174,21 @@ if(isset($_POST['postnr'])) { // har vi sendt form
 </div>
 </div>
 
+</div>
+
 <script>
-function myFunction() {
-  var x = document.getElementById("tilbudDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-  
-}
-function myFunction1() {
-  var x = document.getElementById("bestilDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-  
-}
+
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("#tilbudDIV").toggle();
+  });
+});
+$(document).ready(function(){
+  $("#hide1").click(function(){
+    $("#bestilDIV").toggle();
+  });
+});
+
 </script>
 
 <?php
@@ -257,5 +208,3 @@ function custom_registration_shortcode() {
 
 
 ?>
-
-
