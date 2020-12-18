@@ -93,7 +93,7 @@ function pluginadminfunctions (){
   }
 ?>
 <div class="beregn">
-<h1>Beregning System </h1>
+<h1>Beregningssystem </h1>
 <p>Admin Panel</p>
 <?php
 global $wpdb;
@@ -117,9 +117,9 @@ foreach ($list as $beregnlist){
 
   <?php wp_nonce_field('testplugin','testplugin'); ?>
 
-  <label for="wname">Hvilken post nummer vil du gerne arbejde?</label>
+  <label for="wname">Hvilket postnummer vil du gerne arbejde i?</label>
 <<<<<<< Updated upstream
-    <label for="info">Indteste postnummer eksampel (5000, 4200, 7450)</label>
+    <label for="info">Indtast postnummer eksempel (5000, 4200, 7450)</label>
 =======
 >>>>>>> Stashed changes
   <textarea name="postnr" >
@@ -127,7 +127,7 @@ foreach ($list as $beregnlist){
 
         </textarea>
 
-  <label for="wname">Vinduers priser</label>
+  <label for="wname">Vinduernes priser</label>
     <p>1-9 Vinduer : <input type="text" name="windows9" value="<?php echo $beregnlist->windows9;  ?>"></p>
 
     <p>10-19 Vinduer: <input type="text" name="windows19" value="<?php echo $beregnlist->windows19;  ?>"></p>
@@ -136,7 +136,7 @@ foreach ($list as $beregnlist){
 
 <br>
   <label for="bname">Boligtype </label>
-  <p>Eksta betaling. Det sætter over vinduers priser</p>
+  <p>Eksta betaling for forskellige plan.</p>
 
   <p>Et plan: <input type="text" name="villa1" value="<?php echo $beregnlist->villa1;  ?>"></p>
 

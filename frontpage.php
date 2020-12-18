@@ -9,12 +9,12 @@ function pluginindexfunctions (){
 
 <div class="beregn">
 
-<h1>Beregning System </h1>
+<h1>Beregningssystem </h1>
 
 
 <form action="" method="post">
   <?php wp_nonce_field('testplugin','testplugin'); ?>
-  <label for="wname">Hvad er din postnummer?</label>
+  <label for="wname">Hvad er dit postnummer?</label>
   <input type="text" name="postnr" value="" placeholder="Postnummer">
 
   <label for="wname">Hvor mange vinduer har du?</label>
@@ -124,7 +124,7 @@ if(isset($_POST['postnr'])) { // har vi sendt form
         }
 
       } else {
-         echo 'Vi udlever ikke vinduespolering til udenfor Odense';
+         echo 'Vi kan desværre ikke levere vinduespolering uden for Odense';
 
       }
 }
