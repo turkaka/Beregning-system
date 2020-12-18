@@ -86,3 +86,6 @@
 .beregn form button{
        background-color: #0092D1 !important;
 }
+.beregn button:not(.toggle){
+       background-color: #0092D1 !important;
+}
