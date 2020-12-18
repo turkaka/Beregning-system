@@ -16,17 +16,12 @@ global $wpdb;
     add_action('admin_enqueue_scripts',"addCss");
 
 
-
-add_action('admin_enqueue_scripts',"addCss");
-
 function addCss() {
    wp_enqueue_style('prefix-style',plugins_url('css/style.css',__FILE__));
 }
 
 
 include('frontpage.php');
-=======
-include 'includes/frontpage.php';
 
 
 if ($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}tableberegn'") != $wpdb->prefix . 'tableberegn') {
@@ -72,9 +67,6 @@ function pluginadminfunctions (){
 
         $wpdb->update("{$wpdb->prefix}tableberegn", array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3), array('id' => '1'));
 
-
-
-//      $wpdb->insert("{$wpdb->prefix}tableberegn",array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3));
       echo '<div class="updated">Setting updated</div>';
     }
 
@@ -84,11 +76,6 @@ function pluginadminfunctions (){
 <h1>Beregningssystem </h1>
 <p>Admin Panel</p>
 <?php
-global $wpdb;
-$list = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tableberegn ORDER BY id DESC LIMIT 1");
-foreach ($list as $beregnlist){
-
-
 global $wpdb;
 $list = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tableberegn ORDER BY id DESC LIMIT 1");
 foreach ($list as $beregnlist){
