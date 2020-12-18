@@ -12,16 +12,25 @@ License: GNU
 
 global $wpdb;
 
+<<<<<<< Updated upstream
     add_action('wp_enqueue_scripts',"addCss");
     add_action('admin_enqueue_scripts',"addCss");
 
+=======
+
+add_action('admin_enqueue_scripts',"addCss");
+>>>>>>> Stashed changes
 
 function addCss() {
    wp_enqueue_style('prefix-style',plugins_url('css/style.css',__FILE__));
 }
 
+<<<<<<< Updated upstream
 
 include('frontpage.php');
+=======
+include 'includes/frontpage.php';
+>>>>>>> Stashed changes
 
 
 if ($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}tableberegn'") != $wpdb->prefix . 'tableberegn') {
@@ -41,6 +50,10 @@ if ($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}tableberegn'") != $wpdb->pr
 }
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 add_action("admin_menu","PluginAdminMenu");
 
@@ -66,10 +79,14 @@ function pluginadminfunctions (){
       $villa2 = sanitize_text_field($_POST["villa2"]);
       $villa3 = sanitize_text_field($_POST["villa3"]);
 
+<<<<<<< Updated upstream
 
         $wpdb->update("{$wpdb->prefix}tableberegn", array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3), array('id' => '1'));
 
 
+=======
+      $wpdb->insert("{$wpdb->prefix}tableberegn",array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3));
+>>>>>>> Stashed changes
       echo '<div class="updated">Setting updated</div>';
     }
 
@@ -85,13 +102,26 @@ foreach ($list as $beregnlist){
 
 ?>
 
+<<<<<<< Updated upstream
+=======
+<?php
+global $wpdb;
+$list = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tableberegn ORDER BY id DESC LIMIT 1");
+foreach ($list as $beregnlist){
+
+?>
+
+>>>>>>> Stashed changes
 
 <form action="" method="post">
 
   <?php wp_nonce_field('testplugin','testplugin'); ?>
 
   <label for="wname">Hvilken post nummer vil du gerne arbejde?</label>
+<<<<<<< Updated upstream
     <label for="info">Indteste postnummer eksampel (5000, 4200, 7450)</label>
+=======
+>>>>>>> Stashed changes
   <textarea name="postnr" >
   <?php echo $beregnlist->postnr;  ?>
 
@@ -125,4 +155,8 @@ foreach ($list as $beregnlist){
 }
 }
 
+<<<<<<< Updated upstream
 ?>
+=======
+?>
+>>>>>>> Stashed changes
