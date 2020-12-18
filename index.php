@@ -12,14 +12,16 @@ License: GNU
 
 global $wpdb;
 
+    add_action('wp_enqueue_scripts',"addCss");
+    add_action('admin_enqueue_scripts',"addCss");
 
-add_action('admin_enqueue_scripts',"addCss");
 
 function addCss() {
    wp_enqueue_style('prefix-style',plugins_url('css/style.css',__FILE__));
 }
 
-include 'frontpage.php';
+
+include('frontpage.php');
 
 
 if ($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}tableberegn'") != $wpdb->prefix . 'tableberegn') {
@@ -34,8 +36,9 @@ if ($wpdb->get_var("SHOW TABLES LIKE '{$wpdb->prefix}tableberegn'") != $wpdb->pr
         villa3 TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
         PRIMARY KEY (id)
         );");
-}
+    $wpdb->insert("{$wpdb->prefix}tableberegn",array("postnr"=>"Postnummer","windows9"=>"intaste priser","windows19"=>"intaste priser","windows29"=>"intaste priser","villa1"=>"intaste priser","villa2"=>"intaste priser","villa3"=>"intaste priser"));
 
+}
 
 
 
@@ -44,7 +47,6 @@ add_action("admin_menu","PluginAdminMenu");
 function PluginAdminMenu(){
 
   add_menu_page("Beregning System", "Beregning System", "manage_options","beregning-settings","pluginadminfunctions","dashicons-grid-view", NULL);
-  add_submenu_page("beregning-settings","Vinduespolering","Vinduespolering","manage_options","vinduespolering",array("beregning-settings","vinduespolering"));
 
 }
 
@@ -64,7 +66,10 @@ function pluginadminfunctions (){
       $villa2 = sanitize_text_field($_POST["villa2"]);
       $villa3 = sanitize_text_field($_POST["villa3"]);
 
-      $wpdb->insert("{$wpdb->prefix}tableberegn",array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3));
+
+        $wpdb->update("{$wpdb->prefix}tableberegn", array("postnr"=>$postnr,"windows9"=>$windows9,"windows19"=>$windows19,"windows29"=>$windows29,"villa1"=>$villa1,"villa2"=>$villa2,"villa3"=>$villa3), array('id' => '1'));
+
+
       echo '<div class="updated">Setting updated</div>';
     }
 
@@ -72,7 +77,7 @@ function pluginadminfunctions (){
 ?>
 <div class="beregn">
 <h1>Beregning System </h1>
-
+<p>Admin Panel</p>
 <?php
 global $wpdb;
 $list = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tableberegn ORDER BY id DESC LIMIT 1");
@@ -86,6 +91,7 @@ foreach ($list as $beregnlist){
   <?php wp_nonce_field('testplugin','testplugin'); ?>
 
   <label for="wname">Hvilken post nummer vil du gerne arbejde?</label>
+    <label for="info">Indteste postnummer eksampel (5000, 4200, 7450)</label>
   <textarea name="postnr" >
   <?php echo $beregnlist->postnr;  ?>
 
